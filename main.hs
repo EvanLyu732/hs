@@ -51,6 +51,13 @@ zip' :: [a] -> [b] -> [(a, b)]
 zip' _ [] = []
 zip' []_ = []
 zip' (x: xs)(y: ys) = (x, y): zip' xs ys
+
+quicksort :: (Ord a) => [a] -> [a]
+quicksort [] = []
+quicksort (x: xs) =
+      let smallerBound = quicksort [a | a<-xs, a<=x]
+          biggerBound = quicksort [a | a<-xs, a>x]
+      in smallerBound ++ [x] ++ biggerBound
  
 main =  do 
   print (capital "Dracula")
@@ -61,3 +68,4 @@ main =  do
   print (replicate' 5 5)
   print (reverse' [1, 2, 3])
   print (zip' [1,2,3] ['a', 'b', 'c'])
+  print (quicksort [6, 10, 8, 2, 5])
