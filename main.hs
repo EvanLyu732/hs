@@ -81,6 +81,20 @@ filter' _ [] = []
 filter' p (x:xs)
       | p x = x :filter p xs
       | otherwise = filter p xs
+
+largestDiv :: (Integral a) => a
+largestDiv = head (filter p [10000, 9999..])
+    where p x = x `mod` 2369 == 0
+
+chain :: (Integral a) => a -> [a]
+chain 1 = [1]
+chain n
+  | even n = n:chain(n `div` 2)
+  | odd n = n:chain(n*3 + 1)
+
+-- lambda
+numLongChains :: Int
+numLongChains = length(filter (\xs -> length xs > 10) (map chain [1..100]))
  
 main =  do 
   print (capital "Dracula")
@@ -97,4 +111,9 @@ main =  do
   print (flip' zip [1,2,3,4,5] "Hello")
   print (map' (+3) [1,2,3,4,5])
   print (filter' (>3) [6,2,6,2,3,7,9])
+  print (largestDiv)
+  print (sum (takeWhile (<10000) [n^2 | n<-[1..], odd(n^2)]))
+  print (chain 10)
+  print (numLongChains)
+  print (map (\(a,b) -> a+b) [(1,2), (3,4), (5,6)])
 
