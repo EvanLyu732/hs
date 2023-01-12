@@ -58,6 +58,29 @@ quicksort (x: xs) =
       let smallerBound = quicksort [a | a<-xs, a<=x]
           biggerBound = quicksort [a | a<-xs, a>x]
       in smallerBound ++ [x] ++ biggerBound
+
+applyTwice :: (a->a) -> a -> a
+applyTwice f x = f (f x)
+
+-- mind blow
+zipWith' :: (a->b->c) -> [a]->[b]->[c]
+zipWith' _ [] _ = []
+zipWith' _ _ [] = []
+zipWith' f (x: xs) (y: ys) = f x y :zipWith' f xs ys
+
+flip' :: (a->b->c) -> (b->a->c)
+flip' f = g
+    where g x y = f y x
+
+map' :: (a->b) -> [a] -> [b]
+map' _ [] = []
+map' f (x: xs) = f x: map' f xs
+
+filter' :: (a -> Bool) -> [a] -> [a]
+filter' _ [] = []
+filter' p (x:xs)
+      | p x = x :filter p xs
+      | otherwise = filter p xs
  
 main =  do 
   print (capital "Dracula")
@@ -69,3 +92,9 @@ main =  do
   print (reverse' [1, 2, 3])
   print (zip' [1,2,3] ['a', 'b', 'c'])
   print (quicksort [6, 10, 8, 2, 5])
+  print (applyTwice (+3) 10)
+  print (zipWith' max [4,2,3] [5,6,9])
+  print (flip' zip [1,2,3,4,5] "Hello")
+  print (map' (+3) [1,2,3,4,5])
+  print (filter' (>3) [6,2,6,2,3,7,9])
+
