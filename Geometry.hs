@@ -5,3 +5,5 @@ module Geometry
 
 
 data Country = WaKanDa Int  | Altanlantis Int 
+
+data Person = Person String String String Int Float String String deriving(Show)

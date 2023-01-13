@@ -158,6 +158,15 @@ surface :: Shape -> Float
 surface (Circle a b r) = pi * r ^ 2
 surface (Rectangle x1 y1 x2 y2) = (abs $ x2 - x1) * (abs $ y2 - y1)
 
+data Man = Man{
+               name :: String
+              ,age :: Int
+              ,job :: String
+           } deriving (Show)
+
+data MayBe a = Nothing | Just a
+
+-- expect :: f -> a
 
 main =  do 
   print (capital "Dracula")
@@ -216,3 +225,7 @@ main =  do
   -- print (surface Circle 10)
   -- print (surface Rectangle 0  0 100 100)
   -- print (map (Circle 10 20) [4 5 6 6])
+  let guy =  Man "e" 25 "c"
+  print (guy)
+
+  print (Just "Haha")
