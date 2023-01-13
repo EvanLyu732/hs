@@ -150,7 +150,14 @@ oddSquareSum2 =
 
 numUnique :: (Eq a) => [a] -> Int
 numUnique = length . nub
- 
+
+-- Our own dataType
+data Shape = Circle Float Float Float | Rectangle Float Float Float Float deriving (Show)
+
+surface :: Shape -> Float
+surface (Circle a b r) = pi * r ^ 2
+surface (Rectangle x1 y1 x2 y2) = (abs $ x2 - x1) * (abs $ y2 - y1)
+
 
 main =  do 
   print (capital "Dracula")
@@ -205,3 +212,7 @@ main =  do
 
   print (concat ["I", "am", "you"])
   print (concatMap (replicate 4) [1..3])
+
+  -- print (surface Circle 10)
+  -- print (surface Rectangle 0  0 100 100)
+  -- print (map (Circle 10 20) [4 5 6 6])
