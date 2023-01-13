@@ -1,3 +1,6 @@
+import Data.List
+import Geometry
+
 capital :: String->String
 capital "" = "Empty String"
 capital all@(x:xs) = "The first letter of " ++ all ++ " is " ++ [x]
@@ -142,7 +145,13 @@ oddSquareSum2 =
   let oddSquareSum = filter odd $ map (^2) [1..]
       belowLimit = takeWhile (< 10000) oddSquareSum
   in sum belowLimit
+
+-- Module Started
+
+numUnique :: (Eq a) => [a] -> Int
+numUnique = length . nub
  
+
 main =  do 
   print (capital "Dracula")
   print (capital "Yes")
@@ -186,3 +195,13 @@ main =  do
   print (replicate 100 . product . map (* 3) . zipWith max [1,2,3,4,5] $ [4, 5, 6, 7, 8])
   print (oddSquareSum)
   print (oddSquareSum2)
+ 
+  print (numUnique [3, 2, 2, 3, 5])
+
+  print (intersperse '.' "MONKEY")
+  print (intercalate " " ["I", "am", "you"])
+
+  print (transpose [[1,2,3], [4,5,6], [7,8,9]])
+
+  print (concat ["I", "am", "you"])
+  print (concatMap (replicate 4) [1..3])
