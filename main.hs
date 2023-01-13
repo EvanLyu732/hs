@@ -167,7 +167,38 @@ data Man = Man{
 data MayBe a = Nothing | Just a
 
 -- expect :: f -> a
+--
+data Vector a = Vector  a a a deriving (Show)
+vplus :: (Num t) => Vector t -> Vector t -> Vector t
+(Vector i j k) `vplus` (Vector l m n) = Vector (i+l) (j+m) (k+n)
 
+data Animal = Animal {
+    n :: String
+  , a :: Int
+} deriving (Eq, Show, Read)
+
+data Either a b = Left a | Right b
+
+-- type String = [Char]
+-- type Associated k v = [(k, v)]
+-- type IntMap = Map Int 
+--
+-- data Either a b = Left a | Right b deriving (Eq, Show, Read, Ord)
+
+-- class Eq where
+--    (==) :: a -> a -> bool
+--    (/=) :: a -> a -> bool
+   -- x == y = not (x / y)
+   -- x /= y = not (x == y)
+   --
+-- class Functor' f where
+--   fmap' :: (a -> b) -> f a -> f b
+
+-- map :: (a -> b) -> [a] -> [b]
+-- instance Functor' f where 
+--   fmap' = map
+
+ 
 main =  do 
   print (capital "Dracula")
   print (capital "Yes")
@@ -228,4 +259,22 @@ main =  do
   let guy =  Man "e" 25 "c"
   print (guy)
 
-  print (Just "Haha")
+  -- print (MayBe "Haha")
+  print (Vector 1 2 3 `vplus` Vector 4 5 6)
+  
+  let cat_1 = Animal "cat" 1
+  let cat_2 = Animal "cat" 1
+  print(cat_1 == cat_2)
+  
+  -- 
+  -- I/O
+  -- name <- getLine
+  -- putStrLn ("Hello " ++ name)
+  sequence $ map print [1,2,3,4,5]
+
+  -- forever $ do
+  --   putStr "Input: "
+  --   d <- getLine
+  --   putStr $ map toUpper d
+
+ 
