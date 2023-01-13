@@ -5,8 +5,7 @@ capital all@(x:xs) = "The first letter of " ++ all ++ " is " ++ [x]
 densityTell :: (RealFloat a) => a -> String
 densityTell density 
   | density < 1.2 = "wow"
-  | density <= 2.2 = "wow 2"
-  | otherwise = ":)"
+  | density <= 2.2 = "wow 2" | otherwise = ":)"
 
 -- head' :: [a] -> a
 -- head' [] = error "no head for empty files"
@@ -95,6 +94,54 @@ chain n
 -- lambda
 numLongChains :: Int
 numLongChains = length(filter (\xs -> length xs > 10) (map chain [1..100]))
+
+-- fold
+sum' :: (Num a) => [a] -> a
+sum' xs = foldl (\acc x -> acc + x) 0 xs
+
+sum2' :: (Num a) => [a] -> a
+sum2' = foldl (+) 0
+
+elem' :: (Eq a) => a -> [a] -> Bool
+elem' y ys = foldl (\acc x -> if x == y then True else acc) False ys
+
+map2' :: (a->b) -> [a] -> [b]
+map2' f fs = foldr (\x acc -> f x: acc) [] fs
+
+-- 
+maximum2' :: (Ord a) => [a] -> a
+maximum2'  = foldr1 (\x acc -> if x > acc then x else acc)
+
+reverse2' :: [a] -> [a]
+reverse2' = foldl (\acc x -> x : acc) []
+
+product2' :: (Num a) => [a] -> a
+product2' = foldl1 (*)
+
+-- filter2' :: (a -> Bool) -> [a] -> [a]
+-- filter2' p = foldr (\acc x -> if p x then x : acc else acc) []
+
+head2' :: [a] -> a
+head2' = foldr1 (\x _ -> x)
+
+last2' :: [a] -> a
+last2' = foldl1 (\_ x -> x)
+
+-- dollar 
+-- res = sum (filter (> 10) (map (*2) [2..10]))
+res = sum $ filter (> 10) $ map (*2) [2..10]
+
+-- (.) :: (b->c) -> (a->b) -> a -> c
+-- f.g = \x -> f (g x)
+--
+oddSquareSum :: Integer
+oddSquareSum = sum . takeWhile (<10000) . filter odd . map (^2) $ [1..]
+
+oddSquareSum2 :: Integer
+oddSquareSum2 = 
+  let oddSquareSum = filter odd $ map (^2) [1..]
+      belowLimit = takeWhile (< 10000) oddSquareSum
+  in sum belowLimit
  
 main =  do 
   print (capital "Dracula")
@@ -116,4 +163,26 @@ main =  do
   print (chain 10)
   print (numLongChains)
   print (map (\(a,b) -> a+b) [(1,2), (3,4), (5,6)])
+  print (sum' [3,5,2,1])
+  print (sum2' [3,5,2,1])
+  print (map2' (+3) [3,5,2,1])
+  print (maximum2' [3,5,2,1])
+  print (reverse2' [3,5,2,1])
+  print (product2' [3,5,2,1])
+  print (head2' [3,5,2,1])
+  print (last2' [3,5,2,1])
+  -- scanl
+  print (scanl1 (\acc x -> if x > acc then x else acc) [3,4,5,5,8,9,6,7])
+  print (scanl (flip (:)) [] [3,2,1])
 
+  print (scanr1 (\acc x -> if x > acc then x else acc) [3,4,5,5,8,9,6,7])
+  print (res)
+
+  print (map (\x -> negate (abs x)) [-2,3,5,8,-9])
+  print (map (negate . abs) [-2,3,5,8,-9])
+
+  print (map (negate . sum . tail) [[1..5], [3..6], [1..7]])
+
+  print (replicate 100 . product . map (* 3) . zipWith max [1,2,3,4,5] $ [4, 5, 6, 7, 8])
+  print (oddSquareSum)
+  print (oddSquareSum2)
